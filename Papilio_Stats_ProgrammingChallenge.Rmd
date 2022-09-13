@@ -25,11 +25,16 @@ for (i in 1:length(unique(data$date)))
 res[which((as.numeric(res[, 2]) > 0) & (as.numeric(res[, 3]) <= 0.05) & (as.numeric(res[, 2]) >= 0.78)), ]
 ```
 
-Comparing new_cases and hospital_beds_per_thousand in Asia
+Comparing new_cases and hospital_beds_per_thousand in Asia:
 date : "2022-05-10"
 estimate : "0.78090428193271"
 p-value : "6.5340182363139e-10"
 
 
-This p-value (<<=0.05) rejects the null hypothesis and supports the alternative hypothesis that new_cases and hospital_beds_per_thousand in Asia are significantly correlated. In some cases a positive diagnosis of COVID-19 can lead to hospitalization. A larger number of positive COVID-19 diagnosis necessitates a higher number of required hospital beds to accommodate for the patients.
+Explanations of the findings: 
+This p-value (<<=0.05) rejects the null hypothesis and supports the alternative hypothesis that 
+new_cases and hospital_beds_per_thousand in Asia are significantly correlated. 
+In some cases a positive diagnosis of COVID-19 can lead to hospitalization. 
+A larger number of positive COVID-19 diagnosis necessitates a higher 
+number of required hospital beds to accommodate for the patients. 
 
