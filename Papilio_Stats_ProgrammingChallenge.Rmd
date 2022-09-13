@@ -6,16 +6,23 @@ output: html_document
 ---
 
 ```{r cars}
-# Comparing new_cases and hospital_beds_per_thousand in Asia
-# date : "2022-05-10"
-# estimate : "0.78090428193271"
-# p-value : "6.5340182363139e-10"
+library(dplyr)
+#read the Dataset sheet into “R”. The dataset will be called "data".
+data <- read.csv("https://covid.ourworldindata.org/data/owid-covid-data.csv", na.strings = "", header = T)
 
+res <- NULL
 
-# This p-value (<<=0.05) rejects the null hypothesis ()
-# and supports the alternative hypothesis that new_cases and hospital_beds_per_thousand in Asia are significantly correlated.
-# In some cases a positive diagnosis of COVID-19 can lead to hospitalization.
-# A larger number of positive COVID-19 diagnosis necessitates a higher number of required hospital beds to accommodate for the patients.
+for (i in 1:length(unique(data$date))) 
+{
+  data1 <- data[which((data$date == unique(data$date)[i]) & (data$continent == "Asia")), ]
+  data1 <-data1 %>% select("iso_code", "date", "new_cases", "hospital_beds_per_thousand") #extreme_poverty  #hospital_beds_per_thousand
+  if (sum(rowSums(!is.na(data1[, 3:4])) == 2) >= 10) # data set should have at least 10 rows of non-NA values
+    {
+    res <- rbind(res, c(unique(data$date)[i], cor.test(data1[, 3], data1[, 4])$estimate, cor.test(data1[, 3], data1[, 4])$p.value))
+    }
+}
+
+res[which((as.numeric(res[, 2]) > 0) & (as.numeric(res[, 3]) <= 0.05) & (as.numeric(res[, 2]) >= 0.78)), ]
 ```
 
 Comparing new_cases and hospital_beds_per_thousand in Asia
